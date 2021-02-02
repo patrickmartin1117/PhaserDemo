@@ -1,7 +1,10 @@
-var demo = {};
+var demo = {}, centerX = 1500/2, centerY = 1000/2, umbrella, speed = 4;
 demo.state1 = function(){};
 demo.state1.prototype = {
-    preload: function(){},
+    preload: function(){
+        //insert sprites
+        game.load.image('Umbrella_man', 'assets/sprites/Umbrella_man.png');
+    },
     create: function(){
         game.stage.backgroundColor = '#DDDDDD';
         console.log('state1');
@@ -10,8 +13,33 @@ demo.state1.prototype = {
         */
         //Or instead can do this with function listed below
         addChangeStateEventListeners();
+        //Game scale manager - will scale world with window change
+        game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+        //insert sprites
+        //      location width, height
+        umbrella = game.add.sprite(centerX, centerY, 'Umbrella_man');
+        //set where sprite is
+        //umbrella.anchor.x = 0.5;
+        //umbrella.anchor.x = 0.5;
+        //another way
+        umbrella.anchor.setTo(0.5, 0.5);
+        
     },
-    update: function(){}
+    update: function(){
+        //move sprite
+        if(game.input.keyboard.isDown(Phaser.Keyboard.RIGHT)){
+            umbrella.x += speed;
+        }
+        else if(game.input.keyboard.isDown(Phaser.Keyboard.LEFT)){
+            umbrella.x -= speed;
+        }
+        else if(game.input.keyboard.isDown(Phaser.Keyboard.UP)){
+            umbrella.y -= speed;
+        }
+        else if(game.input.keyboard.isDown(Phaser.Keyboard.DOWN)){
+            umbrella.y += speed;
+        }
+    }
 };
 
 function changeState(i,stateNum){
